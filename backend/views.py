@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate
 class UserRegistrationView(APIView):
     def post(self,request,format=None):
         serializer=UserRegistrationSerializer(data=request.data)
+        email=serializer.validated_data.get('email')
         if serializer.is_valid(raise_exception=True):
             email=serializer.validated_data.get('email')
             if User.objects.filter(email=email).first():
