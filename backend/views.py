@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate
 class UserRegistrationView(APIView):
     def post(self,request,format=None):
         serializer=UserRegistrationSerializer(data=request.data)
-        email=serializer.validated_data.get('email')
         if serializer.is_valid(raise_exception=True):
             email=serializer.validated_data.get('email')
             if User.objects.filter(email=email).first():
@@ -17,8 +16,8 @@ class UserRegistrationView(APIView):
             else:
                 user=serializer.save()
                 password=serializer.data.get('password')
-                hashed_password = make_password(password)
-                user=User(password=hashed_password)
+                user=User(password=password)
+                user.set_password(user.password)
                 return Response({'Message':'Registration Succesfull'},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     # if useremail.alreadyexisted condition is met then
