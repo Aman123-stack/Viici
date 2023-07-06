@@ -5,7 +5,7 @@ from django.db import IntegrityError
 from rest_framework.views import APIView
 from backend.models import UserManager,User
 from backend.renderer import UserRenderer
-from backend.serializers import UserRegistrationSerializer,UserLoginSerializer,UserProfileSerializer
+from backend.serializers import UserRegistrationSerializer,UserLoginSerializer,UserProfileSerializer,PostSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
@@ -64,4 +64,13 @@ class UserProfileView(APIView):
     def get(self,request,format=None):
         serializer=UserProfileSerializer(request.user)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+class PostCreateView(APIView):
+    renderer_classes=[UserRenderer]
+    def post(self, request):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'Message':'Posted Sucessfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # Create your views here.

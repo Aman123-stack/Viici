@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.models import User
+from backend.models import User,Post
 
 # User Serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -23,3 +23,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['id','email','Firstname','Lastname']
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
