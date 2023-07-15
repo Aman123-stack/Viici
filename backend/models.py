@@ -83,7 +83,7 @@ class Post(models.Model):
     post_desc=models.CharField(max_length=400)
     post_title=models.CharField(max_length=150)
     post_content=models.TextField()
-    post_user_id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    post_user_id=models.ForeignKey(User, on_delete=models.CASCADE)
     post_id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     post_created_at = models.DateTimeField(auto_now_add=True)
     class  Meta:
