@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from base.models import BaseModel
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+import django.utils.timezone as timze;
 # Create your models here.
 
 
@@ -43,6 +44,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    user_id = models.AutoField(primary_key=True,default=uuid.uuid4, unique=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -79,13 +81,12 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
 class Post(models.Model):
     post_desc=models.CharField(max_length=400)
     post_title=models.CharField(max_length=150)
     post_content=models.TextField()
-    post_user_id=models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    post_user=models.ForeignKey(User,to_field='user_id', on_delete=models.CASCADE)
     post_created_at = models.DateTimeField(auto_now_add=True)
     class  Meta:
-        db_table = 'post'
-        
+        db_table = 'PostUser'
