@@ -65,7 +65,7 @@ SIMPLE_JWT = {
 
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "USER_ID_FIELD": "id",
+    "USER_ID_FIELD": "user_id",
     "USER_ID_CLAIM": "user_id",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
 
@@ -124,7 +124,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "viici",
         "USER": "root",
-        "PASSWORD": "Rusaman@2000",
+        "PASSWORD": "sarda",
         "PORT": 3306,
         "HOST":"127.0.0.1",
     }
